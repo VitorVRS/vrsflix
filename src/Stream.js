@@ -1,45 +1,46 @@
-var _ = require('underscore');
-var parseRange = require('range-parser');
-var TorrentStream = require('torrent-stream');
+var _ = require('underscore')
+var parseRange = require('range-parser')
+var TorrentStream = require('torrent-stream')
 
 /**
  * Manage stream and its files
+ *
+ *
+ * This class emit the following events:
+ * - Stream::ready - Emit when torrent is ready to read
  */
-var Stream = function (magnet)
-{
-  this.magnet = magnet;
-  this.engine = new TorrentStream(magnet);
-  this.file = null;
-  this.range = null;
+var Stream = function (magnet) {
+  this.magnet = magnet
+  this.engine = new TorrentStream(magnet)
+  this.file = null
+  this.range = null
 
-  this.registerEvents();
-};
+  this.registerEvents()
+}
 
 Stream.prototype = {
 
   /**
    * Method executed when torrent-stream engine is ready
    */
-  ready: function()
-  {
-    this.file = _.max(this.engine.files, function (file) { return file.length; });
+  ready: function () {
+    this.file = _.max(this.engine.files, function (file) { return file.length })
+    global.events.emit('Stream::ready')
   },
 
   /**
    * Method which register/start all events of this class
    */
-  registerEvents: function()
-  {
-    this.engine.on('ready', this.ready.bind(this));
-    this.engine.listen();
+  registerEvents: function () {
+    this.engine.on('ready', this.ready.bind(this))
+    this.engine.listen()
   },
 
   /**
    * Getter for file property
    * @return {Object} Object file from torrent-stream
    */
-  getFile: function ()
-  {
+  getFile: function () {
     return this.file
   },
 
@@ -47,11 +48,9 @@ Stream.prototype = {
    * Method which parse request data and get stream/file info
    * @param  {http.ClientRequest} request Node server request
    */
-  parseRequest: function (request)
-  {
-    if (request.headers.range)
-    {
-      this.range = _.first(parseRange(this.file.length, request.headers.range));
+  parseRequest: function (request) {
+    if (request.headers.range) {
+      this.range = _.first(parseRange(this.file.length, request.headers.range))
     }
   },
 
@@ -59,11 +58,14 @@ Stream.prototype = {
    * Getter for range property
    * @return {Object} Object range from range-parser
    */
-  getNextRange: function ()
-  {
-    return this.range;
+  getNextRange: function () {
+    return this.range
+  },
+
+  addListener: function (event, cb) {
+    global.events.on('Stream::' + event, cb)
   }
 
 }
 
-module.exports = Stream;
+module.exports = Stream

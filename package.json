@@ -27,5 +27,13 @@
     "range-parser": "^1.0.3",
     "torrent-stream": "^1.0.0",
     "underscore": "^1.8.3"
+  },
+
+  "devDependencies": {
+    "standard": "^2.2.3"
+  },
+
+  "scripts": {
+    "test": "standard"
   }
 }

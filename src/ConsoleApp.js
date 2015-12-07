@@ -1,25 +1,19 @@
-var commander = require('commander');
+var commander = require('commander')
+var Stream = require('./Stream')
+var Server = require('./Server')
+var Subtitles = require('./Subtitles')
 
-var Stream = require('./Stream');
-var Server = require('./Server');
-
-var ConsoleApp = function ()
-{
-
+var ConsoleApp = function () {
   this.options = {
-    magnet : ''
+    magnet: ''
   }
 
-  this.parseArgs();
+  this.parseArgs()
 }
 
 ConsoleApp.prototype = {
 
-  parseArgs: function ()
-  {
-
-    var _this = this;
-
+  parseArgs: function () {
     commander
       .version(global.VERSION)
       .usage('[options]')
@@ -27,18 +21,24 @@ ConsoleApp.prototype = {
       .option('-p, --player <player>', 'Player to execute')
       .parse(process.argv)
 
-    if (commander.magnet) this.options.magnet = commander.magnet;
+    if (commander.magnet)
+      this.options.magnet = commander.magnet
 
   },
 
-  init: function ()
-  {
-    var stream = new Stream(this.options.magnet);
-    var server = new Server(stream);
+  init: function () {
+    var stream = new Stream(this.options.magnet)
+    var server = new Server(stream)
+    var subtitles = null
+
+    stream.addListener('ready', function () {
+      subtitles = new Subtitles(stream.getFile())
+      subtitles.loadFile()
+    })
 
     console.log('Server running on: ', server.info().address)
   }
 
 }
 
-module.exports = ConsoleApp;
+module.exports = ConsoleApp
