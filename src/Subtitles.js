@@ -48,6 +48,10 @@ Subtitles.prototype = {
 
   addListener: function (event, cb) {
     global.events.on('Subtitles::' + event, cb)
+  },
+
+  getFilePath: function () {
+    return this.srtFilePath
   }
 
 }

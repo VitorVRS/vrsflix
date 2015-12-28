@@ -5,9 +5,9 @@
 ## Usage:
 ```bash
 $ npm install
-$ ./index.js -m <magnet-link>
-$ [{browser}|vlc] http://127.0.0.1:8888
+$ ./index.js -m <magnet-link> -p <player>
 ```
+***Note: It only supports VLC player***
 
 ## License
 MIT
