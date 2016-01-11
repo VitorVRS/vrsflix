@@ -10,8 +10,10 @@
   "bin": {
     "vrsflix": "./index.js"
   },
-  
-  { "engines" : { "node" : ">=5.0" } },
+
+  "engines": {
+   "node" : ">=5.0"
+  },
 
 
   "repository": {
