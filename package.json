@@ -11,8 +11,6 @@
     "vrsflix": "./index.js"
   },
 
-  "main": "index.js",
-
   "repository": {
     "type": "git",
     "url": "https://github.com/VitorVRS/vrsflix.git"
