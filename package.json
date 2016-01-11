@@ -1,18 +1,14 @@
 {
   "name": "vrsflix",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
-
   "bin": {
     "vrsflix": "./index.js"
   },
-
   "engines": {
-   "node" : ">=5.0"
+    "node": ">=5.0"
   },
-
-
   "repository": {
     "type": "git",
     "url": "https://github.com/VitorVRS/vrsflix.git"
@@ -36,11 +32,9 @@
     "torrent-stream": "^1.0.0",
     "underscore": "^1.8.3"
   },
-
   "devDependencies": {
     "standard": "^2.2.3"
   },
-
   "scripts": {
     "test": "standard"
   }
